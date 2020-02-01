@@ -3,15 +3,10 @@
 Repository containing the work done for my Großer Beleg on "3D Medical Image Fusion using Convolutional Neural Networks" at Technische Universität (TU) Dresden. Essentially a fork of [TFGAN](https://github.com/matthewberger/tfgan), updated for PyTorch 1.3.1 (was 0.2) and support for the NIFTI file format (Volumetric Scalar Arrays).
 
 <p align="center">
-   
-<img src="https://raw.githubusercontent.com/starkgate/ImageFusionNeuralNetwork/master/results1.png" height="800">
-
-<i>Qualitative comparison of 6 volume renderings of the volume the network was trained on. Groundtruth (A), prediction (B) and difference (C).</i>
-
-<img src="https://raw.githubusercontent.com/starkgate/ImageFusionNeuralNetwork/master/results2.png" height="800">
-
-<i>Qualitative comparison of 6 volume renderings of a new volume unknown to the network. Groundtruth (D), prediction (E) and difference (F).</i>
-
+   <img src="https://raw.githubusercontent.com/starkgate/ImageFusionNeuralNetwork/master/results1.png" height="800"><br>
+   <i>Qualitative comparison of 6 volume renderings of the volume the network was trained on. Groundtruth (A), prediction (B) and difference (C).</i><br><br>
+   <img src="https://raw.githubusercontent.com/starkgate/ImageFusionNeuralNetwork/master/results2.png" height="800"><br>
+   <i>Qualitative comparison of 6 volume renderings of a new volume unknown to the network. Groundtruth (D), prediction (E) and difference (F).</i><br>
 </p>
 
 ## Conclusion
