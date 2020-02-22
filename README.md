@@ -1,6 +1,6 @@
 ## Image Fusion Neural Network
 
-Repository containing the work done for my Großer Beleg on "3D Medical Image Fusion using Convolutional Neural Networks" at Technische Universität (TU) Dresden. Essentially a fork of [TFGAN](https://github.com/matthewberger/tfgan) updated for PyTorch 1.3.1 (was 0.2) with support for the NIFTI file format (Volumetric Scalar Arrays) and a fix for mode collapse by skipping the opacity GAN.
+Repository containing the work done for my Großer Beleg on "3D Medical Image Fusion using Convolutional Neural Networks" at Technische Universität (TU) Dresden. Fork of [TFGAN](https://github.com/matthewberger/tfgan) with a fix for mode collapse by skipping the opacity GAN. This also enables generalisation of the network to work with any arbitrary 3D volume instead of only the one it was trained with. Also updated for PyTorch 1.3.1 (was 0.2) with support for the NIFTI file format (Volumetric Scalar Arrays).
 
 <p align="center">
    <img src="https://raw.githubusercontent.com/starkgate/ImageFusionNeuralNetwork/master/results1.png" height="800"><br>
