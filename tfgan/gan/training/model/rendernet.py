@@ -325,6 +325,7 @@ class OpacityNetDiscriminator(nn.Module):
 class TranslationNetGenerator(nn.Module):
     def __init__(self, opt):
         super(TranslationNetGenerator, self).__init__()
+        print("generator")
         self.opacity_res = opt.opacityImageSize
         self.rgb_res = opt.rgbImageSize
         self.nvf = opt.nvf
@@ -385,6 +386,9 @@ class TranslationNetGenerator(nn.Module):
             nn.Linear(self.nvf,self.nvf,bias=self.linear_bias), nn.LeakyReLU(0.2, inplace=True)
         )
 
+        print("self.view_encoder")
+        print(self.view_encoder)
+
         # opacity TF network
         if not self.use_latent_opacity:
             self.opacity_encoder = nn.Sequential(
@@ -410,6 +414,11 @@ class TranslationNetGenerator(nn.Module):
         self.color_latent_encoder = nn.Sequential(nn.Linear(self.ntf,self.latent_color_dim,bias=self.linear_bias),nn.LeakyReLU(0.2,inplace=True))
         self.color_latent_decoder = nn.Sequential(nn.Linear(self.latent_color_dim,self.ntf,bias=self.linear_bias),nn.LeakyReLU(0.2,inplace=True))
 
+        print("self.color_encoder")
+        print(self.color_encoder)
+
+        print("self.opacity_encoder")
+        print(self.opacity_encoder)
         # image encoder
         self.image_encoder_layers = nn.ModuleList()
         for rdx in range(self.n_encoder_layers):
@@ -482,6 +491,8 @@ class TranslationNetGenerator(nn.Module):
                 self.upsample_layers.append(nn.Sequential(collections.OrderedDict(upsample_layer_list)))
     #
 
+        print("self.image_encoder_layers")
+        print(self.image_encoder_layers)
     def set_opacity_net(self, opnet_filename, use_cuda=True):
         self.opNet = [torch.load(opnet_filename)]
         if use_cuda:
@@ -568,6 +579,7 @@ class TranslationNetGenerator(nn.Module):
 class TranslationNetDiscriminator(nn.Module):
     def __init__(self, opt):
         super(TranslationNetDiscriminator, self).__init__()
+        print("discriminator")
         self.opacity_res = opt.opacityImageSize
         self.rgb_res = opt.rgbImageSize
         self.nvf = opt.nvf
@@ -610,6 +622,8 @@ class TranslationNetDiscriminator(nn.Module):
             nn.Linear(5,self.nvf,bias=self.linear_bias), nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(self.nvf,self.nvf,bias=self.linear_bias), nn.LeakyReLU(0.2, inplace=True)
         )
+        print("self.view_encoder")
+        print(self.view_encoder)
 
         self.opacity_encoder = nn.Sequential(
             nn.Conv1d(1,16,5, stride=2, padding=2, bias=self.conv1d_bias), nn.LeakyReLU(0.2, inplace=True), # 128
@@ -627,6 +641,10 @@ class TranslationNetDiscriminator(nn.Module):
             nn.Conv1d(128,128,5, stride=2, padding=2, bias=self.conv1d_bias), nn.LeakyReLU(0.2, inplace=True), # 8
             nn.Conv1d(128,self.ntf,8, stride=1, padding=0, bias=self.conv1d_bias), nn.LeakyReLU(0.2, inplace=True) # 1
         )
+        print("self.opacity_encoder")
+        print(self.opacity_encoder)
+        print("self.color_encoder")
+        print(self.color_encoder)
 
         # image encoder
         self.image_encoder_layers = nn.ModuleList()
@@ -644,6 +662,8 @@ class TranslationNetDiscriminator(nn.Module):
             else:
                 self.image_encoder_layers.append(nn.LeakyReLU(0.2,inplace=True))
         #
+        print("self.image_encoder_layers")
+        print(self.image_encoder_layers)
 
         # if we are upsampling, then a bit more involved: need to perform some convolutions w/ strides on rgb image
         if self.do_upsample:
@@ -667,6 +687,8 @@ class TranslationNetDiscriminator(nn.Module):
             nn.Linear(int(self.encoder_nplanes[-1]),int(self.encoder_nplanes[-1]),bias=self.linear_bias), nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(int(self.encoder_nplanes[-1]),1,bias=self.linear_bias))
         self.sigmoid = nn.Sigmoid()
+        print("self.decision_subnet")
+        print(self.decision_subnet)
     #
 
     def forward(self, input):
@@ -688,8 +710,7 @@ class TranslationNetDiscriminator(nn.Module):
         else:
             image_encoded = input[3]
         for image_layer in self.image_encoder_layers:
-            if self.debug:
-                print('image layer:',image_layer)
+            print('image layer:',image_layer)
             image_encoded = image_layer(image_encoded)
 
         # reshape transfer functions and image, and merge with view
